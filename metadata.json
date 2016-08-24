@@ -1,0 +1,20 @@
+{
+  "name": "strathclyde-php",
+  "version": "0.1.0",
+  "author": "Michael Hughes",
+  "summary": "PHP Installation Script",
+  "license": "",
+  "source": "",
+  "project_page": "",
+  "issues_url": null,
+  "dependencies": [
+    {
+      "name": "puppetlabs/stdlib",
+      "version_requirement": ">= 1.0.0"
+    },
+    {
+      "name": "puppetlabs/vcsrepo",
+      "version_requirement": ">= 1.0.0"
+    }
+  ]
+}

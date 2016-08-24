@@ -1,0 +1,40 @@
+Info
+
+PHP configure	'./configure' '--with-libdir=lib64' '--with-apxs2=/usr/local/apache2.2/bin/apxs' '--with-gd' '--with-config-file-path=/etc/php/php.ini' '--with-ldap' '--with-openssl' '--with-curl' '--with-xmlrpc' '--with-oci8' '--with-jpeg-dir' '--with-png-dir' '--enable-sockets' '--enable-mbstring' '--enable-zip' '--enable-soap' '--with-mysqli' '--with-zlib' '--enable-opcache' '--enable-intl'
+
+PHP 7 Download
+http://uk1.php.net/distributions/php-7.0.10.tar.bz2
+
+PHP Git repository
+https://github.com/php/php-src/
+git@github.com:php/php-src.git
+
+
+
+	package {
+		[
+			'git'
+		]:
+		ensure => present
+	}
+	
+	file {
+		'/etc/php7/apache2':
+			ensure => directory,
+			before => File ['/etc/php7/apache2/php.ini'];
+			
+		'/etc/php7/apache2/php.ini':
+			source => 'puppet::///modules/php/apache2-php.ini',
+			require => Package['php7.0'];
+		
+		'/etc/php7/cli':
+			ensure => directory,
+			before => File ['/etc/php7/apache2/php.ini'];
+			
+		'/etc/php7/cli/php.ini':
+			source => 'puppet::///modules/php/cli-php.ini',
+			require => Package['php7.0-cli'];
+	}
+    
+ Runn puppet:
+ puppet apply --modulepath=puppet/modules manifests/default.pp
