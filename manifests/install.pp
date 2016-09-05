@@ -67,31 +67,37 @@ class php::install inherits php {
     exec { 'buildconf_php':
        command => "./buildconf --force",
        cwd=> $srcdir,
-       path=> "${srcdir}:/bin:/usr/bin"
+       path=> "${srcdir}:/bin:/usr/bin",
+       timeout=> 0
     } ->
 
     exec { 'configure_php':
        command => "./configure ${configurecmd};",
        cwd=> $srcdir,
-       path=> "${srcdir}:/bin:/usr/bin"
+       path=> "${srcdir}:/bin:/usr/bin",
+       timeout=> 0
     } ->
 
     exec { 'build_php':
        command => "make -C ${srcdir}",
        cwd => $srcdir,
-       path=> "${srcdir}:/bin:/usr/bin:/usr/sbin"
+       path=> "${srcdir}:/bin:/usr/bin:/usr/sbin",
+       timeout=> 0
+	
     } ->
     
     exec { 'libtoolfinish': 
        command => "libtool --finish ${srcdir}/libs",
        cwd => $srcdir,
-       path=> "${srcdir}:/bin:/usr/bin:/usr/sbin"
+       path=> "${srcdir}:/bin:/usr/bin:/usr/sbin",
+       timeout=> 0
     } ->
 
     exec { 'install_php':
        command => "make -C ${srcdir} install",
        cwd => $srcdir,
        path=> "${srcdir}:/bin:/usr/bin:/usr/sbin",
+       timeout=> 0,
        creates=> '/usr/local/bin/php'
     } 
     
