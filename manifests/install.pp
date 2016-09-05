@@ -40,12 +40,12 @@ class php::install inherits php {
     }
     $with_apxs      =$apxs2     ? { false => "", default => "--with-apxs2=${apxs2}"}
     $with_libdir    =$libdir    ? { false => "", default => "--with-libdir=${libdir}"}
-    $with_config_file_path   =$config_file_path  ? { false => "", default => "--with-config-file-path=${config_file_path}"}
+    $with_config_file_path   = $config_file_path  ? { false => "", default => "--with-config-file-path=${config_file_path}"}
     $with_gd        =$gd        ? { true => "--with-gd",        false => "", default => "${gd}"}
     $with_ldap      =$ldap      ? { true => "--with-ldap",      false => "", default => "--with-ldap=${ldap}"}
     $with_openssl   =$openssl   ? { true => "--with-openssl",   false => "", default => "--with-openssl=${openssl}"}
     $with_curl      =$curl      ? { true => "--with-curl",      false => "", default => "--with-curl=${curl}"}
-    $with_xmlrpc     =$xmlrpc   ? { true => "--with-xmlrpc",    false => "", default => "--with-xmlrpc=${xmlrpc}"}
+    $with_xmlrpc    =$xmlrpc    ? { true => "--with-xmlrpc",    false => "", default => "--with-xmlrpc=${xmlrpc}"}
     $with_oci8      =$oci8      ? { true => "--with-oci8",      false => "", default => "--with-oci8=${oci8}"}
     $with_jpegdir   =$jpegdir   ? { true => "--with-jpeg-dir",   false => "", default => "--with-jpeg-dir=${jpegdir}"}
     $with_pngdir    =$pngdir    ? { true => "--with-png-dir",    false => "", default => "--with-png-dir=${pngdir}"}
@@ -57,7 +57,7 @@ class php::install inherits php {
     $with_zlib      =$zlib      ? { true => "--with-zlib",      false => "", default => "--with-zlib=${zlib}"}
     $with_opcache   =$opcache   ? { true => "",   false => "--disable-opcache", default => "${opcache}"}
     $with_intl      =$intl      ? { true => "--enable-intl",      false => "", default => "${intl}"}
-    $disable_cli    =$cli       ? { true => "--disable-cli",    false => "", default => ""}
+    $disable_cli    =$cli       ? { true => "",    false => "--disable-cli", default => ""}
 
          
     $configurecmd = "${with_apxs} ${with_libdir} ${with_config_file_path} ${with_gd} ${with_ldap} ${with_openssl} ${with_curl} ${with_xmlrpc} ${with_oci8} ${with_jpegdir} ${with_pngdir} ${with_sockets} ${with_mbstring} ${with_zip} ${with_soap} ${with_mysqli} ${with_zlib} ${with_opcache} ${with_intl} ${disable_cli}"
@@ -91,8 +91,8 @@ class php::install inherits php {
     exec { 'install_php':
        command => "make -C ${srcdir} install",
        cwd => $srcdir,
-       path=> "${srcdir}:/bin:/usr/bin:/usr/sbin"
-#       creates => "/usr/local/bin/php-config"
+       path=> "${srcdir}:/bin:/usr/bin:/usr/sbin",
+       creates=> '/usr/local/bin/php'
     } 
     
     file { 'php7.load':
