@@ -4,6 +4,7 @@ class php::params {
      $version         =    '7.0.10'
      $working_dir     =    '/tmp/php'
      $install_dir     =    '/usr/local'
+     $install_url     =    'http://localhost/'
      $download_url    =    'http://uk1.php.net/distributions/php-7.0.10.tar.bz2'
      $src_url         =    'https://github.com/php/php-src.git'
     
